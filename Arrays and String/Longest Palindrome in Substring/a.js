@@ -1,25 +1,4 @@
 let array = [4, 23, 43, 23, 4, -4, -5, 123, -1, 234, 4];
-
-function checkPalindrome(array) {
-    let left = 0;
-    let right = array.length - 1;
-
-    while (left <= parseInt(array.length / 2)) {
-        if (array[left] !== array[right]) {
-            break;
-        }
-
-        left++;
-        right--;
-    }
-
-    if (left === parseInt(array.length / 2) + 1) {
-        return true;
-    }
-
-    return false;
-}
-
 let max = 0;
 let ans = [];
 
