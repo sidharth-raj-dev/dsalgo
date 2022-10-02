@@ -36,3 +36,7 @@ while (l >= 0 && r < array.length) {
 }
 
 console.log(max);
+
+// loop
+//      logic for moving left pointer
+// move right pointer
