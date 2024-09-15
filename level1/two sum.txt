@@ -1,0 +1,14 @@
+def twoSum(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """
+        # make a hashmap
+        s = {}
+        for i,val in enumerate(nums):
+            s[val] = i
+
+        for i,val in enumerate(nums):
+            if (target-val) in s and s[target-val] != i:
+                return [s[target-val],i]

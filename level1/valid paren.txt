@@ -1,0 +1,47 @@
+solution-1:
+
+def isValid(self, s):
+        """
+        :type s: str
+        :rtype: bool
+        """
+        temp = []
+
+        for i, val in enumerate(s):
+            if (val == ")" or val == "}" or val == "]"):
+                # pop and check
+                if (len(temp) > 0):
+                    curr = temp.pop()
+                else:
+                    return False
+                if (val == ")" and curr == "("):
+                    continue
+                elif (val == "}" and curr == "{"):
+                    continue
+                elif (val == "]" and curr == "["):
+                    continue
+                else:
+                    return False
+            else:
+                temp.append(val)
+
+        return True
+
+solution-2:
+
+def valid_paren(s):
+    temp = []
+    for val in s:
+        if val in ('}', ')', ']'):
+            if not temp:
+                return False
+            curr = temp.pop()
+            if ((curr == '{' and val == '}') or
+                (curr == '(' and val == ')') or
+                (curr == '[' and val == ']')):
+                continue
+            else:
+                return False
+        else:
+            temp.append(val)
+    return len(temp) == 0

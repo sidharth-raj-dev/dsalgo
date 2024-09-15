@@ -1,0 +1,18 @@
+def firstBadVersion(self, n):
+    """
+    :type n: int
+    :rtype: int
+    """
+    def binary_search(left, right):
+        if left == right:
+            return left
+        
+        mid = left + (right - left) // 2
+        
+        if self.isBadVersion(mid):
+            # We use 'mid' instead of 'mid - 1' here
+            return binary_search(left, mid)
+        else:
+            return binary_search(mid + 1, right)
+    
+    return binary_search(1, n)
