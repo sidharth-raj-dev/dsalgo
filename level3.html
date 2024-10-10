@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neomorphic Code Slides</title>
+    <style>
+        body {
+            font-family: 'Courier New', monospace;
+            background-color: #e0e5ec;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            color: #333;
+        }
+
+        .slide-container {
+            width: 90%;
+            max-width: 800px;
+            background-color: #e0e5ec;
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow:
+                20px 20px 60px #bec3c9,
+                -20px -20px 60px #ffffff;
+        }
+
+        .window-buttons {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        .button {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            margin-right: 8px;
+        }
+
+        .red {
+            background-color: #ff5f56;
+        }
+
+        .yellow {
+            background-color: #ffbd2e;
+        }
+
+        .green {
+            background-color: #27c93f;
+        }
+
+        .code-area {
+            background-color: #f0f3f9;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 20px;
+            box-shadow:
+                inset 5px 5px 10px #bec3c9,
+                inset -5px -5px 10px #ffffff;
+            overflow-x: auto;
+        }
+
+        .problem-info {
+            margin-bottom: 20px;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .nav-button {
+            background-color: #e0e5ec;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            color: #333;
+            box-shadow:
+                5px 5px 10px #bec3c9,
+                -5px -5px 10px #ffffff;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            box-shadow:
+                2px 2px 5px #bec3c9,
+                -2px -2px 5px #ffffff;
+        }
+
+        .nav-button:active {
+            box-shadow:
+                inset 2px 2px 5px #bec3c9,
+                inset -2px -2px 5px #ffffff;
+        }
+
+        .keyword {
+            color: #ff5f56;
+        }
+
+        .function {
+            color: #27c93f;
+        }
+
+        .string {
+            color: #ffbd2e;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="slide-container">
+        <div class="window-buttons">
+            <div class="button red"></div>
+            <div class="button yellow"></div>
+            <div class="button green"></div>
+        </div>
+        <div class="problem-info">
+            <h2 id="problemTitle"></h2>
+            <p id="problemDetails"></p>
+        </div>
+        <div class="code-area">
+            <pre><code id="solutionCode"></code></pre>
+        </div>
+        <div class="nav-buttons">
+            <button class="nav-button" id="prevButton">&#8592; Previous</button>
+            <button class="nav-button" id="nextButton">Next &#8594;</button>
+        </div>
+    </div>
+
+    <script>
+        const slides = [
+            {
+                title: "Insert Interval",
+                difficulty: "Medium",
+                timeEstimate: "25 mins",
+                solution: `// Solution for Insert Interval
+function insert(intervals, newInterval) {
+    const result = [];
+    let i = 0;
+    while (i < intervals.length && intervals[i][1] < newInterval[0]) {
+        result.push(intervals[i]);
+        i++;
+    }
+    let mergedInterval = newInterval;
+    while (i < intervals.length && intervals[i][0] <= mergedInterval[1]) {
+        mergedInterval = [Math.min(mergedInterval[0], intervals[i][0]), Math.max(mergedInterval[1], intervals[i][1])];
+        i++;
+    }
+    result.push(mergedInterval);
+    while (i < intervals.length) {
+        result.push(intervals[i]);
+        i++;
+    }
+    return result;
+}`
+            },
+            {
+                title: "01 Matrix",
+                difficulty: "Medium",
+                timeEstimate: "30 mins",
+                solution: `// Solution for 01 Matrix
+function updateMatrix(mat) {
+    const m = mat.length;
+    const n = mat[0].length;
+    const dist = Array(m).fill(null).map(() => Array(n).fill(Infinity));
+    for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+            if (mat[i][j] === 0) {
+                dist[i][j] = 0;
+            } else {
+                if (i > 0) dist[i][j] = Math.min(dist[i][j], dist[i - 1][j] + 1);
+                if (j > 0) dist[i][j] = Math.min(dist[i][j], dist[i][j - 1] + 1);
+            }
+        }
+    }
+    for (let i = m - 1; i >= 0; i--) {
+        for (let j = n - 1; j >= 0; j--) {
+            if (i < m - 1) dist[i][j] = Math.min(dist[i][j], dist[i + 1][j] + 1);
+            if (j < n - 1) dist[i][j] = Math.min(dist[i][j], dist[i][j + 1] + 1);
+        }
+    }
+    return dist;
+}`
+            },
+            {
+                title: "K Closest Points to Origin",
+                difficulty: "Medium",
+                timeEstimate: "30 mins",
+                solution: `// Solution for K Closest Points to Origin
+function kClosest(points, k) {
+    return points.sort((a, b) => (a[0] * a[0] + a[1] * a[1]) - (b[0] * b[0] + b[1] * b[1])).slice(0, k);
+}`
+            },
+            {
+                title: "Longest Substring Without Repeating Characters",
+                difficulty: "Medium",
+                timeEstimate: "30 mins",
+                solution: `// Solution for Longest Substring Without Repeating Characters
+function lengthOfLongestSubstring(s) {
+    let start = 0;
+    let maxLength = 0;
+    const charMap = new Map();
+    for (let end = 0; end < s.length; end++) {
+        if (charMap.has(s[end]) && charMap.get(s[end]) >= start) {
+            start = charMap.get(s[end]) + 1;
+        }
+        charMap.set(s[end], end);
+        maxLength = Math.max(maxLength, end - start + 1);
+    }
+    return maxLength;
+}`
+            },
+            {
+                title: "3Sum",
+                difficulty: "Medium",
+                timeEstimate: "30 mins",
+                solution: `// Solution for 3Sum
+function threeSum(nums) {
+    nums.sort((a, b) => a - b);
+    const result = [];
+    for (let i = 0; i < nums.length - 2; i++) {
+        if (i > 0 && nums[i] === nums[i - 1]) continue;
+        let left = i + 1;
+        let right = nums.length - 1;
+        while (left < right) {
+            const sum = nums[i] + nums[left] + nums[right];
+            if (sum === 0) {
+                result.push([nums[i], nums[left], nums[right]]);
+                while (left < right && nums[left] === nums[left + 1]) left++;
+                while (left < right && nums[right] === nums[right - 1]) right--;
+                left++;
+                right--;
+            } else if (sum < 0) {
+                left++;
+            } else {
+                right--;
+            }
+        }
+    }
+    return result;
+}`
+            },
+            {
+                title: "Binary Tree Level Order Traversal",
+                difficulty: "Medium",
+                timeEstimate: "20 mins",
+                solution: `// Solution for Binary Tree Level Order Traversal
+function levelOrder(root) {
+    if (!root) return [];
+    const result = [];
+    const queue = [root];
+    while (queue.length > 0) {
+        const level = [];
+        const levelSize = queue.length;
+        for (let i = 0; i < levelSize; i++) {
+            const node = queue.shift();
+            level.push(node.val);
+            if (node.left) queue.push(node.left);
+            if (node.right) queue.push(node.right);
+        }
+        result.push(level);
+    }
+    return result;
+}`
+            },
+            {
+                title: "Clone Graph",
+                difficulty: "Medium",
+                timeEstimate: "25 mins",
+                solution: `// Solution for Clone Graph
+function cloneGraph(node) {
+    if (!node) return null;
+    const visited = new Map();
+    function dfs(node) {
+        if (visited.has(node)) return visited.get(node);
+        const newNode = new Node(node.val);
+        visited.set(node, newNode);
+        for (const neighbor of node.neighbors) {
+            newNode.neighbors.push(dfs(neighbor));
+        }
+        return newNode;
+    }
+    return dfs(node);
+}`
+            },
+            {
+                title: "Evaluate Reverse Polish Notation",
+                difficulty: "Medium",
+                timeEstimate: "30 mins",
+                solution: `// Solution for Evaluate Reverse Polish Notation
+function evalRPN(tokens) {
+    const stack = [];
+    const operators = {
+        '+': (a, b) => a + b,
+        '-': (a, b) => a - b,
+        '*': (a, b) => a * b,
+        '/': (a, b) => Math.trunc(a / b)
+    };
+    for (const token of tokens) {
+        if (token in operators) {
+            const b = stack.pop();
+            const a = stack.pop();
+            stack.push(operators[token](a, b));
+        } else {
+            stack.push(Number(token));
+        }
+    }
+    return stack[0];
+}`
+            }
+        ];
+
+        let currentSlide = 0;
+
+        const problemTitle = document.getElementById('problemTitle');
+        const problemDetails = document.getElementById('problemDetails');
+        const solutionCode = document.getElementById('solutionCode');
+        const prevButton = document.getElementById('prevButton');
+        const nextButton = document.getElementById('nextButton');
+
+        function updateSlide() {
+            const slide = slides[currentSlide];
+            problemTitle.textContent = slide.title;
+            problemDetails.textContent = `${slide.difficulty} · ${slide.timeEstimate}`;
+            solutionCode.textContent = slide.solution;
+        }
+
+        function goToPrevSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlide();
+        }
+
+        function goToNextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlide();
+        }
+
+        prevButton.addEventListener('click', goToPrevSlide);
+        nextButton.addEventListener('click', goToNextSlide);
+
+        // Add keyboard navigation
+        document.addEventListener('keydown', (event) => {
+            if (event.key === 'ArrowLeft') {
+                goToPrevSlide();
+            } else if (event.key === 'ArrowRight') {
+                goToNextSlide();
+            }
+        });
+
+        updateSlide();
+    </script>
+</body>
+
+</html>
