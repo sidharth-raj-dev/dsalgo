@@ -142,27 +142,27 @@
                 timeEstimate: "15 mins",
                 solution: `// Solution for Anagram
 def isAnagram(self, s, t):
-        """
-        :type s: str
-        :type t: str
-        :rtype: bool
-        """
-        map1 = {}
-        map2 = {}
+    """
+    :type s: str
+    :type t: str
+    :rtype: bool
+    """
+    map1 = {}
+    map2 = {}
 
-        for i,val in enumerate(s):
-            if val in map1:
-                map1[val] += 1
-            else:
-                map1[val] = 0
+    for i,val in enumerate(s):
+        if val in map1:
+            map1[val] += 1
+        else:
+            map1[val] = 0
 
-        for i,val in enumerate(t):
-            if val in map2:
-                map2[val] += 1
-            else:
-                map2[val] = 0
+    for i,val in enumerate(t):
+        if val in map2:
+            map2[val] += 1
+        else:
+            map2[val] = 0
 
-        return map1 == map2`
+    return map1 == map2`
             },
 
             {
@@ -197,27 +197,27 @@ public int Height(TreeNode root) {
                 timeEstimate: "15 mins",
                 solution: `// Solution for Binary Search
 def b(self, nums, l, r, target):
-        mid = (l + r) // 2
-        if l > r:
-            return -1
-        elif nums[mid] == target:
-            return mid
+    mid = (l + r) // 2
+    if l > r:
+        return -1
+    elif nums[mid] == target:
+        return mid
+    else:
+        if nums[mid] > target:
+            return self.b(nums, l, mid - 1, target)
         else:
-            if nums[mid] > target:
-                return self.b(nums, l, mid - 1, target)
-            else:
-                return self.b(nums, mid + 1, r, target)
+            return self.b(nums, mid + 1, r, target)
 
-    def search(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: int
-        """
-        l = 0
-        r = len(nums) - 1
+def search(self, nums, target):
+    """
+    :type nums: List[int]
+    :type target: int
+    :rtype: int
+    """
+    l = 0
+    r = len(nums) - 1
 
-        return self.b(nums, l, r, target)`
+    return self.b(nums, l, r, target)`
             },
 
             {
@@ -247,13 +247,13 @@ a = price[0]
 max_prof = 0
 
 for i,val in enumerate(price):
-        profit = val - a
-        if a < val:
-                max_prof = max(profit,max_p)
-        else:
-                # move left pointer
-                a = price[i]
-return profit`
+    profit = val - a
+    if a < val:
+        max_prof = max(profit,max_p)
+    else:
+        # move left pointer
+        a = price[i]
+    return profit`
             },
 
             {

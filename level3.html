@@ -19,6 +19,7 @@
 
         .slide-container {
             width: 90%;
+            height: 80%;
             max-width: 800px;
             background-color: #e0e5ec;
             border-radius: 20px;
@@ -26,6 +27,7 @@
             box-shadow:
                 20px 20px 60px #bec3c9,
                 -20px -20px 60px #ffffff;
+            overflow: scroll;
         }
 
         .window-buttons {
@@ -138,26 +140,60 @@
                 title: "Insert Interval",
                 difficulty: "Medium",
                 timeEstimate: "25 mins",
-                solution: `// Solution for Insert Interval
+                solution: `
+// Solution for Insert Interval problem
 function insert(intervals, newInterval) {
+    // Initialize an empty array to store the merged intervals
+    // This will be our final result containing all intervals in sorted order
     const result = [];
+    
+    // Initialize a counter for iterating through the existing intervals
+    // We'll use this to keep track of our position in the intervals array
     let i = 0;
+
+    // Phase 1: Add all intervals that come entirely before newInterval
+    // These intervals don't overlap with newInterval and can be added as-is
     while (i < intervals.length && intervals[i][1] < newInterval[0]) {
+        // Add the current interval to the result array without any changes
         result.push(intervals[i]);
+        // Move to the next interval in the original array
         i++;
     }
+
+    // Initialize mergedInterval with newInterval
+    // This will be used to merge overlapping intervals
     let mergedInterval = newInterval;
+
+    // Phase 2: Merge overlapping intervals
+    // Continue as long as there are intervals that potentially overlap
     while (i < intervals.length && intervals[i][0] <= mergedInterval[1]) {
-        mergedInterval = [Math.min(mergedInterval[0], intervals[i][0]), Math.max(mergedInterval[1], intervals[i][1])];
+        // Update mergedInterval to cover the entire overlapping range
+        mergedInterval = [
+            // Take the smaller of the two start times to ensure we cover the entire range
+            Math.min(mergedInterval[0], intervals[i][0]),
+            // Take the larger of the two end times to ensure we cover the entire range
+            Math.max(mergedInterval[1], intervals[i][1])
+        ];
+        // Move to the next interval in the original array
         i++;
     }
+
+    // After merging all overlapping intervals, add the merged interval to the result
     result.push(mergedInterval);
+
+    // Phase 3: Add remaining intervals that come entirely after mergedInterval
+    // These intervals don't overlap with mergedInterval and can be added as-is
     while (i < intervals.length) {
+        // Add the current interval to the result array without any changes
         result.push(intervals[i]);
+        // Move to the next interval in the original array
         i++;
     }
+
+    // Return the final result array containing all merged and non-overlapping intervals
     return result;
-}`
+}
+`
             },
             {
                 title: "01 Matrix",
@@ -200,20 +236,41 @@ function kClosest(points, k) {
                 title: "Longest Substring Without Repeating Characters",
                 difficulty: "Medium",
                 timeEstimate: "30 mins",
-                solution: `// Solution for Longest Substring Without Repeating Characters
-function lengthOfLongestSubstring(s) {
-    let start = 0;
-    let maxLength = 0;
-    const charMap = new Map();
-    for (let end = 0; end < s.length; end++) {
-        if (charMap.has(s[end]) && charMap.get(s[end]) >= start) {
-            start = charMap.get(s[end]) + 1;
-        }
-        charMap.set(s[end], end);
-        maxLength = Math.max(maxLength, end - start + 1);
-    }
-    return maxLength;
-}`
+                solution: `# Function to find the length of the longest substring without repeating characters
+def length_of_longest_substring(s):
+    # Initialize the start pointer of the sliding window
+    # This pointer will move when we encounter a repeating character
+    start = 0
+    # Variable to store the maximum length of substring found so far
+    # This will be our final result
+    max_length = 0
+    # Dictionary to store characters and their most recent indices
+    # Key: character, Value: index where it was last seen
+    char_map = {}
+    # Iterate through the string using 'end' as the end pointer of our sliding window
+    for end in range(len(s)):
+        # Check if the current character is already in our map AND
+        # if its last occurrence is within our current window
+        
+        # Our char_map would be {'a':0, 'b':1, 'c':2}.
+        # start would be 0 (beginning of the string).
+        # We see 'a' again, and its last position (0) is >= start (0).
+        # So we move start to 0 + 1 = 1, effectively starting a new substring from 'b'.
+        if s[end] in char_map and char_map[s[end]] >= start:
+            # If so, move the start pointer to the right of the last occurrence
+            # of the current character
+            # This effectively removes the repeating character from our window
+            start = char_map[s[end]] + 1
+        # Update the last seen position of the current character
+        # This happens regardless of whether it's a repeat or not
+        char_map[s[end]] = end
+        # Calculate the length of the current substring (end - start + 1)
+        # and update max_length if this substring is longer
+        # The '+1' is because array indices start at 0, so we need to add 1 to get the true length
+        max_length = max(max_length, end - start + 1)
+    # After examining all characters, return the length of the longest substring found
+    return max_length
+`
             },
             {
                 title: "3Sum",
